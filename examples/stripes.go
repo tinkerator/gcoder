@@ -18,9 +18,9 @@ import (
 
 var (
 	dest      = flag.String("dest", "stripes.nc", "destination laser file")
-	speed     = flag.Int("speed", 2000, "motion speed with laser")
-	fly       = flag.Int("fly", 3000, "motion speed without laser")
-	power     = flag.Float64("power", 100, "laser power [0..100]")
+	speed     = flag.Int("speed", 3000, "motion speed with laser (mm/min)")
+	fly       = flag.Int("fly", 3000, "motion speed without laser (mm/min)")
+	power     = flag.Float64("power", 80, "laser %power [0..100]")
 	fill      = flag.Bool("fill", true, "raster inside the polygons")
 	copies    = flag.Int("copies", 1, "number of times to run over pattern")
 	width     = flag.Int("width", 720, "width of PNG image in NC file")
@@ -100,6 +100,7 @@ func main() {
 			g.LineXY(pt.X, pt.Y, *power)
 		}
 	}
+
 	if *fill {
 		for i, s := range polys.P {
 			if s.Hole {
