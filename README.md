@@ -29,8 +29,8 @@ This is the image of what is rastered by the 1.6W Snapmaker A350 laser
 device when running the generated `stripes.nc` g-code file. Note: the
 small red/black X mark(s) in the bottom left of that image refer to
 the expected work origin position. The red mark (obscured by the black
-one in this case) marks the work origin at the start of running the
-job, and the black one is the work origin at the end of the job. For
+one in this case) marks the work origin at the end of running the
+job, and the black one is the work origin at the start of the job. For
 jobs that change the work origin, these two marks will differ in
 location.
 
