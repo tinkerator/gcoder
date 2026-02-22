@@ -6,6 +6,7 @@ package gcoder
 import (
 	"errors"
 	"fmt"
+	"time"
 )
 
 type Command int
@@ -17,13 +18,14 @@ const (
 
 // Step holds an atom of g-code work.
 type Step struct {
-	X, Y, Z float64
-	Rel     bool
-	Active  bool
-	Power   float64
-	Speed   int
-	Comment string
-	Command Command
+	X, Y, Z  float64
+	Rel      bool
+	Active   bool
+	Power    float64
+	Speed    int
+	Duration int
+	Comment  string
+	Command  Command
 }
 
 // String serializes a (*Step) value.
@@ -47,8 +49,9 @@ func NewImage() *Image {
 // ErrInvalidTool etc are the error return values for the gcoder
 // package.
 var (
-	ErrInvalidTool  = errors.New("invalid tool selection")
-	ErrInvalidPower = errors.New("invalid tool power")
+	ErrInvalidTool     = errors.New("invalid tool selection")
+	ErrInvalidPower    = errors.New("invalid tool power")
+	ErrInvalidDuration = errors.New("invalid wait duration")
 )
 
 // Note adds a comment to the image stream.
@@ -79,6 +82,25 @@ func moveXY(x, y float64) *Step {
 // accomplished without the tool being active.
 func (im *Image) MoveXY(x, y float64) error {
 	im.Steps = append(im.Steps, moveXY(x, y))
+	return nil
+}
+
+// wait waits a specified amount of time.
+func wait(d time.Duration) *Step {
+	return &Step{
+		Duration: int(d / time.Millisecond),
+	}
+}
+
+// Wait waits the specified duration of time with the tool in its
+// current state. The function will return an error for any duration
+// less than a millisecond as this is the shortest supported wait
+// time.
+func (im *Image) Wait(d time.Duration) error {
+	if d < time.Millisecond {
+		return ErrInvalidDuration
+	}
+	im.Steps = append(im.Steps, wait(d))
 	return nil
 }
 

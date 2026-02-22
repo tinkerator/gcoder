@@ -187,6 +187,10 @@ func (im *Image) A350Laser(ht HeadType, wr io.Writer, pngImage []byte) error {
 				}
 				continue
 			}
+			if s.Duration != 0 {
+				fmt.Fprintf(code, "G4 P%d\n", s.Duration)
+				continue
+			}
 			if s.Rel {
 				penZ, dZ = penZ+s.Z, s.Z
 				power = s.Power
@@ -286,6 +290,10 @@ func (im *Image) A350CNC(wr io.Writer, pngImage []byte) error {
 			default:
 				return fmt.Errorf("unrecognized command %d", s.Command)
 			}
+			continue
+		}
+		if s.Duration != 0 {
+			fmt.Fprintf(code, "G4 P%d\n", s.Duration)
 			continue
 		}
 		if s.Rel {
