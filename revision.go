@@ -1,3 +1,3 @@
 package gcoder
 
-var gCoderRevision = "zappem.net/pub/io/gcoder v0.6.9"
+var gCoderRevision = "zappem.net/pub/io/gcoder v0.6.10"
