@@ -1,11 +1,9 @@
 module zappem.net/pub/io/gcoder
 
-go 1.24.0
-
-toolchain go1.24.10
+go 1.25.0
 
 require (
-	golang.org/x/image v0.33.0
+	golang.org/x/image v0.39.0
 	zappem.net/pub/graphics/polymark v0.6.7
 	zappem.net/pub/graphics/raster v0.7.0
 	zappem.net/pub/math/geom v0.6.1
